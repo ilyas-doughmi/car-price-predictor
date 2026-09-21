@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Données et artefacts générés par les scripts (régénérés à la demande)
+data/processed/
+data/models/
+
+# Documentation de révision (gardée locale, pas poussée sur le dépôt)
+docs/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
