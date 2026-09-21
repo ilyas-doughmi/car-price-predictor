@@ -12,3 +12,7 @@ def impute_missing(df):
         else:
             df[col] = df[col].fillna(df[col].median())
     return df
+
+
+def drop_duplicates(df):
+    return df.drop_duplicates()
