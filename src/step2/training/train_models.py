@@ -1,7 +1,9 @@
 import pandas as pd
-import joblib
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
-from step2.training.models import get_models
+import numpy as np
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import root_mean_squared_error, mean_absolute_error, r2_score
+from models import get_models
 
 
 def load_data():
@@ -12,24 +14,30 @@ def load_data():
     return X_train, X_test, y_train, y_test
 
 
+def compute_metrics(y_test, y_pred):
+    rmse = root_mean_squared_error(y_test, y_pred)
+    mae = mean_absolute_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+    return rmse, mae, r2
+
+
 def main():
     X_train, X_test, y_train, y_test = load_data()
 
-    rows = []
-    for name, model in get_models().items():
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
-        rows.append({
-            'model': name,
-            'R2': r2_score(y_test, y_pred),
-            'MAE': mean_absolute_error(y_test, y_pred),
-            'RMSE': mean_squared_error(y_test, y_pred, squared=False),
-        })
+    log_y_train = np.log1p(y_train)
 
-    results = pd.DataFrame(rows).sort_values('R2', ascending=False)
-    results.to_csv('data/models/results_step2.csv', index=False)
-    print(results.to_string(index=False))
-    joblib.dump(get_models(), 'data/models/baselines.pkl')
+    results = []
+    for name, model in get_models().items():
+        pipeline = Pipeline([('scaler', StandardScaler()), ('model', model)])
+        pipeline.fit(X_train, log_y_train)
+        y_pred = np.expm1(pipeline.predict(X_test))
+        rmse, mae, r2 = compute_metrics(y_test, y_pred)
+        print(name, "-> RMSE:", rmse, "MAE:", mae, "R2:", r2)
+        results.append([name, rmse, mae, r2])
+
+    pd.DataFrame(results, columns=['model', 'rmse', 'mae', 'r2']).to_csv(
+        'data/models/results_step2.csv', index=False)
+    print("done")
 
 
 if __name__ == '__main__':
