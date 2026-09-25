@@ -3,6 +3,17 @@
 Predicting the resale price (`selling_price`) of used cars, in INR, from a
 CarDekho dataset (4340 cars). Machine Learning pipeline, end to end.
 
+## Results
+
+Final model: **optimized XGBoost** trained on `log(price)`.
+
+| Metric | Value |
+|---|---|
+| R² | 0.862 |
+| MAE | 75 706 INR (≈ 7 586 MAD) |
+| RMSE | 116 317 INR |
+| MAPE | 19.6 % (≈ 80 % precision) |
+
 ## Pipeline
 
 | Step | Scripts | Purpose |
