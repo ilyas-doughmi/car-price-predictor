@@ -162,24 +162,12 @@ car-price-predictor
 │   ├── step3/   optimisation (GridSearchCV) + réentraînement
 │   ├── step4/   comparaison finale + analyse des erreurs
 │   └── step5/   prédiction interactive
-├── docs/        documentation pédagogique (débrief, concepts)
 └── readme.md
 ```
 
 Les fichiers **générés** (`data/processed/`, `data/models/` : metrics, graphiques,
-`best_params.json`) et `docs/` sont ignorés par `.gitignore`. Le **modèle final**
+`best_params.json`) sont ignorés par `.gitignore`. Le **modèle final**
 `models/model.pkl` est, lui, gardé pour être livré avec le projet.
-
----
-
-## 📚 Documentation
-
-| Fichier | Contenu |
-|---|---|
-| `docs/debrief.md` | guide de soutenance : toutes les notions (R², MAE, RMSE, MAPE…), Q&R probable |
-| `docs/concepts.md` | tous les concepts : utilisés / non utilisés et pourquoi |
-| `docs/step1.md` | documentation pédagogique détaillée de l'étape 1 |
-| `docs/step6.md` | rapport final complet |
 
 ---
 
